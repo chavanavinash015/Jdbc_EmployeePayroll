@@ -18,44 +18,43 @@ public class JdbcEmpPayroll {
                     url, username, password);
             System.out.println(
                     "Connection Established successfully");
-            PreparedStatement st = con.prepareStatement("Select * from employee_detail");
-            PreparedStatement st1 = con.prepareStatement("Update salary_details Set basic_pay=? where salary_id=?");
-            st1.setInt(1,37000);
-            st1.setInt(2,5);
-            boolean result = st.execute();
+            PreparedStatement st = con.prepareStatement("Select * from salary_detail");
+            PreparedStatement st2 = con.prepareStatement("Select * from salary_detail where start_date Between '2018-09-21' AND '2018-09-24'");
+            boolean result = st2.execute();
             if (result) {
-                ResultSet rs = st.getResultSet();
+                ResultSet rs = st2.getResultSet();
                 while (rs.next()) {
                     int id
-                            = rs.getInt("employee_id"); // Retrieve name from db
+                            = rs.getInt("salary_id"); // Retrieve name from db
                     System.out.println(id); // Print result on console
                     String name
-                            = rs.getString("employee_name"); // Retrieve name from db
+                            = rs.getString("basic_pay"); // Retrieve name from db
                     System.out.println(name); // Print result on console
                     String gender
-                            = rs.getString("gender"); // Retrieve name from db
+                            = rs.getString("deductions"); // Retrieve name from db
                     System.out.println(gender); // Print result on console
                     String city
-                            = rs.getString("city"); // Retrieve name from db
+                            = rs.getString("taxable_pay"); // Retrieve name from db
                     System.out.println(city); // Print result on console
                     String state
-                            = rs.getString("address"); // Retrieve name from db
+                            = rs.getString("tax"); // Retrieve name from db
                     System.out.println(state); // Print result on console
                     String PhoneNumber
-                            = rs.getString("phone_numbe"); // Retrieve name from db
+                            = rs.getString("net_pay"); // Retrieve name from db
                     System.out.println(PhoneNumber); // Print result on console
                     String country
-                            = rs.getString("state"); // Retrieve name from db
+                            = rs.getString("start_date"); // Retrieve name from db
                     System.out.println(country); // Print result on console
                 }
-//            }else{
-//                int rowcount=st.getMaxRows();
-//                System.out.println(rowcount);
-//            }
             }else{
-                int rowCount = st1.getUpdateCount();
-                System.out.println(rowCount);
+                int rowcount=st2.getMaxRows();
+                System.out.println(rowcount);
             }
+//            }else{
+//                int rowCount = st1.getUpdateCount();
+//                System.out.println(rowCount);
+//            }
+
             con.close(); // close connection
             System.out.println("Connection Closed....");
         } catch (SQLException | ClassNotFoundException e) {
