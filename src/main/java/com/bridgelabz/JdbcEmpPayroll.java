@@ -19,6 +19,9 @@ public class JdbcEmpPayroll {
             System.out.println(
                     "Connection Established successfully");
             PreparedStatement st = con.prepareStatement("Select * from employee_detail");
+            PreparedStatement st1 = con.prepareStatement("Update salary_details Set basic_pay=? where salary_id=?");
+            st1.setInt(1,37000);
+            st1.setInt(2,5);
             boolean result = st.execute();
             if (result) {
                 ResultSet rs = st.getResultSet();
@@ -45,9 +48,13 @@ public class JdbcEmpPayroll {
                             = rs.getString("state"); // Retrieve name from db
                     System.out.println(country); // Print result on console
                 }
+//            }else{
+//                int rowcount=st.getMaxRows();
+//                System.out.println(rowcount);
+//            }
             }else{
-                int rowcount=st.getMaxRows();
-                System.out.println(rowcount);
+                int rowCount = st1.getUpdateCount();
+                System.out.println(rowCount);
             }
             con.close(); // close connection
             System.out.println("Connection Closed....");
